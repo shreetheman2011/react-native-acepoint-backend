@@ -15,6 +15,7 @@ router.post("/", protectRoute, async (req, res) => {
       registrationDeadline,
       allowedRatings,
       format,
+      adminFirstName,
     } = req.body;
     if (
       !name ||
@@ -22,7 +23,8 @@ router.post("/", protectRoute, async (req, res) => {
       !endDate ||
       !registrationDeadline ||
       !allowedRatings ||
-      !format
+      !format ||
+      !adminFirstName
     ) {
       return res.status(400).json({ message: "Please provide all fields!" });
     }
@@ -33,7 +35,9 @@ router.post("/", protectRoute, async (req, res) => {
       registrationDeadline,
       allowedRatings,
       format,
-      createdByAdminFirstName: req.user.firstName,
+      adminFirstName,
+      signedUpUsers: [],
+      matches: [],
     });
     await newLeague.save();
     res
