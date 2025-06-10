@@ -1,6 +1,7 @@
 // /api/users/me
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+const router = express.Router();
 
 router.get("/me", async (req, res) => {
   const authHeader = req.headers.authorization;
@@ -21,3 +22,4 @@ router.get("/me", async (req, res) => {
     res.status(401).json({ message: "Unauthorized" });
   }
 });
+export default router;
