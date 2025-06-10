@@ -28,6 +28,8 @@ router.post("/", protectRoute, async (req, res) => {
     ) {
       return res.status(400).json({ message: "Please provide all fields!" });
     }
+    console.log("Received league data:", req.body);
+
     const newLeague = new League({
       name,
       startDate,
