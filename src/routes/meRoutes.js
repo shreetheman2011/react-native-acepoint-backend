@@ -1,6 +1,7 @@
 // /api/users/me
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import express from "express";
 const router = express.Router();
 
 router.get("/me", async (req, res) => {
