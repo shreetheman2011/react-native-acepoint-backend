@@ -4,6 +4,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import leagueRoutes from "./routes/leagueRoutes.js";
 import matchRoutes from "./routes/matchRoutes.js";
+import meRoutes from "./routes/meRoutes.js";
 import { connectDB } from "./lib/db.js";
 import job from "./lib/cron.js";
 
@@ -16,6 +17,7 @@ job.start();
 app.use("/api/auth", authRoutes);
 app.use("/api/leagues", leagueRoutes);
 app.use("/api/matches", matchRoutes);
+app.use("/api/users", meRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
