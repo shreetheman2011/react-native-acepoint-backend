@@ -80,12 +80,7 @@ router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const league = await League.findById(req.params.id);
     if (!league) return res.status(404).json({ message: "League not found" });
-    const isAdmin = isAdmin(req);
-    if (!isAdmin) {
-      return res
-        .status(404)
-        .json({ message: "You are not an admin. Unauthorized Access" });
-    }
+
     await league.deleteOne();
 
     res.json({ message: "League deleted successfully" });
