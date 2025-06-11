@@ -2,6 +2,8 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import express from "express";
+import protectRoute from "./../middleware/auth.middleware";
+import { getAllUsers, updateUserRole } from "./../controllers/userController";
 const router = express.Router();
 
 router.get("/me", async (req, res) => {
@@ -41,5 +43,8 @@ router.get("/find-by-name", async (req, res) => {
 
   res.json({ _id: user._id });
 });
+
+router.put("/:userId/role", protectRoute, updateUserRole);
+router.get("/", protectRoute, getAllUsers);
 
 export default router;
