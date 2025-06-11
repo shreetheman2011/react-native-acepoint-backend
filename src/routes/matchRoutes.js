@@ -37,16 +37,20 @@ router.post("/:leagueId", protectRoute, async (req, res) => {
   }
 });
 
-// GET: Fetch all matches for a specific league
 router.get("/:leagueId", protectRoute, async (req, res) => {
   try {
-    const matches = await Match.find({ league: req.params.leagueId })
-      .populate("side1", "firstName lastName")
-      .populate("side2", "firstName lastName");
+    const admin = await isAdmin(req);
+    if (!admin) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    const matches = await Match.find({ league: req.params.leagueId }).lean();
+
+    // matches will have player names stored directly, e.g. side1: ["John Doe", "Jane Doe"]
 
     res.status(200).json(matches);
   } catch (error) {
-    console.log("Error fetching matches:", error);
+    console.error("Error fetching matches:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
