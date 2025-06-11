@@ -39,20 +39,16 @@ router.post("/:leagueId", protectRoute, async (req, res) => {
 
 router.get("/:leagueId", protectRoute, async (req, res) => {
   try {
-    const admin = await isAdmin(req);
-    if (!admin) {
-      return res.status(403).json({ message: "Unauthorized" });
+    if (!mongoose.Types.ObjectId.isValid(req.params.leagueId)) {
+      return res.status(400).json({ message: "Invalid league ID" });
     }
 
     const matches = await Match.find({ league: req.params.leagueId }).lean();
 
-    // matches will have player names stored directly, e.g. side1: ["John Doe", "Jane Doe"]
-
-    res.status(200).json(matches);
+    res.status(200).json(matches || []);
   } catch (error) {
     console.error("Error fetching matches:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
-
 export default router;
