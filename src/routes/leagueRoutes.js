@@ -76,6 +76,29 @@ router.get("/my-leagues", protectRoute, async (req, res) => {
   }
 });
 
+router.patch("/:leagueId/register", async (req, res) => {
+  const { leagueId } = req.params;
+  const { userId } = req.body;
+
+  try {
+    const league = await League.findById(leagueId);
+    if (!league) return res.status(404).json({ message: "League not found" });
+
+    // Prevent duplicate registration
+    if (league.signedUpUsers.includes(userId)) {
+      return res.status(400).json({ message: "User already registered" });
+    }
+
+    league.signedUpUsers.push(userId);
+    await league.save();
+
+    res.status(200).json({ message: "Successfully registered", league });
+  } catch (err) {
+    console.error("Error in registration:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const league = await League.findById(req.params.id);
