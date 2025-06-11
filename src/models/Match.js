@@ -14,7 +14,7 @@ const matchSchema = new mongoose.Schema(
     },
     score: {
       type: String,
-      default: "",
+      default: "0-0, 0-0, 0-0",
     },
     status: {
       type: String,
