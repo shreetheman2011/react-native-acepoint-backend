@@ -77,7 +77,7 @@ router.get("/my-leagues", protectRoute, async (req, res) => {
 });
 
 // PUT /api/leagues/:leagueId/register
-router.put("/:leagueId/register", async (req, res) => {
+router.put("/:leagueId/register", protectRoute, async (req, res) => {
   const { leagueId } = req.params;
   const userId = req.user._id;
 
