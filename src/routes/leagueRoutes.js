@@ -83,10 +83,10 @@ router.put("/:leagueId/register", async (req, res) => {
 
   try {
     const league = await League.findById(leagueId);
-    if (!league) return res.status(404).json({ error: "League not found" });
+    if (!league) return res.status(404).json({ message: "League not found" });
 
     if (league.signedUpUsers.includes(userId)) {
-      return res.status(400).json({ error: "Already registered" });
+      return res.status(400).json({ message: "Already registered" });
     }
 
     league.signedUpUsers.push(userId);
@@ -95,7 +95,7 @@ router.put("/:leagueId/register", async (req, res) => {
     res.status(200).json({ message: "User registered successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
