@@ -57,4 +57,29 @@ router.get("/:leagueId", protectRoute, async (req, res) => {
   }
 });
 
+router.get("/:leagueId/players", protectRoute, async (req, res) => {
+  try {
+    const matches = await Match.find({ league: req.params.leagueId })
+      .populate("side1", "firstName lastName _id")
+      .populate("side2", "firstName lastName _id");
+
+    const playersMap = new Map();
+
+    matches.forEach((match) => {
+      match.side1.forEach((player) =>
+        playersMap.set(player._id.toString(), player)
+      );
+      match.side2.forEach((player) =>
+        playersMap.set(player._id.toString(), player)
+      );
+    });
+
+    const uniquePlayers = Array.from(playersMap.values());
+    res.status(200).json(uniquePlayers);
+  } catch (err) {
+    console.error("Error fetching players:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;
