@@ -2,6 +2,7 @@ import express from "express";
 import Match from "../models/Match.js";
 import League from "../models/League.js";
 import protectRoute from "../middleware/auth.middleware.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
