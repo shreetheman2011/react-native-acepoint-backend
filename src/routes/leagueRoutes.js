@@ -75,12 +75,9 @@ router.get("/my-leagues", protectRoute, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-import express from "express";
-import { League } from "../models/League.js";
-import { authenticate } from "../middleware/authenticate.js";
 
 // PUT /api/leagues/:leagueId/register
-router.put("/:leagueId/register", authenticate, async (req, res) => {
+router.put("/:leagueId/register", async (req, res) => {
   const { leagueId } = req.params;
   const userId = req.user._id;
 
