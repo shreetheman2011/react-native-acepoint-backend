@@ -2,17 +2,11 @@ import express from "express";
 import Match from "../models/Match.js";
 import League from "../models/League.js";
 import protectRoute from "../middleware/auth.middleware.js";
-import { isAdmin } from "../utils/isAdmin.js";
 
 const router = express.Router();
 
 // POST: Admin creates a match for a specific league
 router.post("/:leagueId", protectRoute, async (req, res) => {
-  const admin = await isAdmin(req);
-  if (!admin) {
-    return res.status(403).json({ message: "Unauthorized" });
-  }
-
   try {
     const { format, score, status, side1, side2 } = req.body;
 

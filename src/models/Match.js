@@ -23,14 +23,14 @@ const matchSchema = new mongoose.Schema(
     },
     side1: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
+        required: true,
       },
     ],
     side2: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
+        required: true,
       },
     ],
   },
