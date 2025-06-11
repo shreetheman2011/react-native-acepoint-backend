@@ -75,27 +75,30 @@ router.get("/my-leagues", protectRoute, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+import express from "express";
+import { League } from "../models/League.js";
+import { authenticate } from "../middleware/authenticate.js";
 
-router.patch("/:leagueId/register", async (req, res) => {
+// PUT /api/leagues/:leagueId/register
+router.put("/:leagueId/register", authenticate, async (req, res) => {
   const { leagueId } = req.params;
-  const { userId } = req.body;
+  const userId = req.user._id;
 
   try {
     const league = await League.findById(leagueId);
-    if (!league) return res.status(404).json({ message: "League not found" });
+    if (!league) return res.status(404).json({ error: "League not found" });
 
-    // Prevent duplicate registration
     if (league.signedUpUsers.includes(userId)) {
-      return res.status(400).json({ message: "User already registered" });
+      return res.status(400).json({ error: "Already registered" });
     }
 
     league.signedUpUsers.push(userId);
     await league.save();
 
-    res.status(200).json({ message: "Successfully registered", league });
+    res.status(200).json({ message: "User registered successfully" });
   } catch (err) {
-    console.error("Error in registration:", err);
-    res.status(500).json({ message: "Internal server error" });
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
