@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import express from "express";
-import protectRoute from "./../middleware/auth.middleware";
+import protectRoute from "../middleware/auth.middleware.js";
 import { getAllUsers, updateUserRole } from "./../controllers/userController";
 const router = express.Router();
 
