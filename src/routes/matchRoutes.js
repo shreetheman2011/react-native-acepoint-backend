@@ -3,6 +3,7 @@ import Match from "../models/Match.js";
 import League from "../models/League.js";
 import protectRoute from "../middleware/auth.middleware.js";
 import mongoose from "mongoose";
+import { updateMatch } from "../controllers/matchesController.js";
 
 const router = express.Router();
 
@@ -52,4 +53,5 @@ router.get("/:leagueId", protectRoute, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+router.put("/update/:matchId", protectRoute, updateMatch);
 export default router;
