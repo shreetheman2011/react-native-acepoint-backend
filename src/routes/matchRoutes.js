@@ -10,7 +10,7 @@ const router = express.Router();
 // POST: Admin creates a match for a specific league
 router.post("/:leagueId", protectRoute, async (req, res) => {
   try {
-    const { format, score, status, side1, side2 } = req.body;
+    const { format, score, status, side1, side2, allowedRatings } = req.body;
 
     const league = await League.findById(req.params.leagueId);
     if (!league) {
@@ -24,6 +24,7 @@ router.post("/:leagueId", protectRoute, async (req, res) => {
       status,
       side1,
       side2,
+      rating: allowedRatings,
     });
 
     await match.save();

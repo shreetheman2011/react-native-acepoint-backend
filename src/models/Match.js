@@ -21,6 +21,10 @@ const matchSchema = new mongoose.Schema(
       enum: ["not started", "in progress", "finished"],
       default: "not started",
     },
+    rating: {
+      type: String,
+      enum: ["3.0", "3.5", "4.0", "4.5"],
+    },
     side1: [
       {
         type: String,
