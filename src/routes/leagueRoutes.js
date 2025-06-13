@@ -83,7 +83,11 @@ router.put("/:leagueId/register", protectRoute, async (req, res) => {
 
   try {
     const league = await League.findById(leagueId);
-    if (!league) return res.status(404).json({ message: "League not found" });
+    if (!league)
+      return res.status(404).json({
+        message:
+          "  League not found. This league may have been deleted. Please close out the app, reopen and see if the league is still there. If so, pleasecontact help services by texting HELPACEPOINT to +19253419183",
+      });
 
     if (league.signedUpUsers.includes(userId)) {
       return res.status(400).json({ message: "Already registered" });
@@ -102,7 +106,13 @@ router.put("/:leagueId/register", protectRoute, async (req, res) => {
 router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const league = await League.findById(req.params.id);
-    if (!league) return res.status(404).json({ message: "League not found" });
+    if (!league)
+      return res
+        .status(404)
+        .json({
+          message:
+            "  League not found. This league may have been deleted. Please close out the app, reopen and see if the league is still there. If so, please contact help services by texting HELPACEPOINT to +19253419183",
+        });
 
     await league.deleteOne();
 

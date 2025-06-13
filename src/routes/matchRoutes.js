@@ -14,7 +14,12 @@ router.post("/:leagueId", protectRoute, async (req, res) => {
 
     const league = await League.findById(req.params.leagueId);
     if (!league) {
-      return res.status(404).json({ message: "League not found" });
+      return res
+        .status(404)
+        .json({
+          message:
+            "  League not found. This league may have been deleted. Please close out the app, reopen and see if the league is still there. If so, please contact help services by texting HELPACEPOINT to +19253419183",
+        });
     }
 
     const match = new Match({
