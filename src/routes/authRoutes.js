@@ -10,8 +10,9 @@ const generateToken = (userId) => {
 
 router.post("/register", async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
-    if (!firstName || !lastName || !email || !password) {
+     const { firstName, lastName, email, password,
+      utr, handedness, backhand, playStyle, favoriteSurface, city, bio, avatarUrl
+    } = req.body;    if (!firstName || !lastName || !email || !password) {
       return res.status(404).json({ message: "All fields are required!" });
     }
     if (password.length < 6) {
@@ -27,27 +28,23 @@ router.post("/register", async (req, res) => {
           "User with this email already exists. Forgot your password? Text FORGOTPASSWORD to +19253419183. Calls will not be answered!",
       });
     }
-    const user = new User({
-      firstName,
-      lastName,
-      email,
-      password,
-      role: "user",
+     const user = new User({
+      firstName, lastName, email, password, role: "user",
+      utr, handedness, backhand, playStyle, favoriteSurface, city, bio, avatarUrl
     });
 
     await user.save();
 
     const token = generateToken(user._id);
 
-    res.status(201).json({
+     res.status(201).json({
       token,
       user: {
-        _id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        role: user.role,
-        createdAt: user.createdAt,
+        _id: user._id, firstName: user.firstName, lastName: user.lastName,
+        email: user.email, role: user.role, createdAt: user.createdAt,
+        utr: user.utr, handedness: user.handedness, backhand: user.backhand,
+        playStyle: user.playStyle, favoriteSurface: user.favoriteSurface,
+        city: user.city, bio: user.bio, avatarUrl: user.avatarUrl,
       },
     });
   } catch (error) {
