@@ -3,28 +3,21 @@ import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-    },
-    role: {
-      type: String,
-      default: "user",
-    },
+    firstName: { type: String, required: true, index: true },
+    lastName: { type: String, required: true, index: true },
+    email: { type: String, required: true, unique: true, index: true },
+    password: { type: String, required: true, minlength: 6 },
+    role: { type: String, enum: ["user","admin"], default: "user" },
+
+    // 🟢 Tennis-specific profile fields (all optional for backward compat)
+    utr: { type: Number, min: 0, max: 20 },
+    handedness: { type: String, enum: ["left","right"], default: undefined },
+    backhand: { type: String, enum: ["one-handed","two-handed"], default: undefined },
+    playStyle: { type: String, enum: ["baseliner","all-court","counterpuncher","serve-volley","aggressive-baseliner"], default: undefined },
+    favoriteSurface: { type: String, enum: ["hard","clay","grass","other"], default: undefined },
+    city: { type: String },
+    bio: { type: String, maxlength: 500 },
+    avatarUrl: { type: String },
   },
   { timestamps: true }
 );
