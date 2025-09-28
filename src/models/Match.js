@@ -18,7 +18,7 @@ const matchSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["not started", "in progress", "finished"],
+      enum: ["not started", "in progress", "finished", "cancelled"],
       default: "not started",
     },
     rating: {
@@ -37,6 +37,18 @@ const matchSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    scheduledDate: {
+      type: Date,
+      required: true,
+    },
+    court: {
+      type: String,
+      default: null,
+    },
+    notes: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
