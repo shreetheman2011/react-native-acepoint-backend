@@ -25,6 +25,23 @@ router.get("/me", async (req, res) => {
     res.status(401).json({ message: "Unauthorized" });
   }
 });
+// Add this in meRoutes.js
+router.get("/:userId", protectRoute, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 router.get("/find-by-name", async (req, res) => {
   const { firstName, lastName } = req.query;
 
