@@ -9,7 +9,7 @@ const matchSchema = new mongoose.Schema(
     },
     format: {
       type: String,
-      enum: ["singles", "doubles"],
+      enum: ["singles", "doubles", "team"],
       required: true,
     },
     score: {
